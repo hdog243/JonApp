@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/workflows/allure-report.yaml" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="Jon.Tests/Jon.Tests.csproj" />
   </Folder>

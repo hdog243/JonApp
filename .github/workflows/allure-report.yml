@@ -1,0 +1,6 @@
+name: Deploy Allure Report to Pages
+on:
+  push:
+    branches:
+      - master
+- 

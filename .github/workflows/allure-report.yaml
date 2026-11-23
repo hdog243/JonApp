@@ -1,0 +1,41 @@
+name: Deploy Allure Report to Pages
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch: 
+
+env:
+      DOTNET_VERSION: "10.x"
+
+jobs:
+  test-and-publish:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: install allure cli
+          run: npm install -g allure-commandline
+
+        - name: checkout-repo
+          uses: actions/checkout@v3
+  
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+        - name: Restore dependencies
+          run: dotnet restore
+
+        - name: Build solution
+          run: dotnet build --configuration Release --no-restore
+
+        #run tests and generate allure results
+        - name: Run .NET Tests
+          id: dotnet-test
+          run: dotnet test --configuration Release --no-build
+
+        - name: Generate Allure Results
+          if: always()
+          run: allure generate --clean
+
